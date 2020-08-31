@@ -1,0 +1,43 @@
+{%extends 'courses/layout.html'%}{%load static%} {%block body%}
+<div class="container content">
+  <div id="filtererror"></div>
+  <div class="d-flex bd-highlight">
+    <div
+      class="mr-auto p-2 bd-highlight align-self-center"
+      style="font-style: italic"
+    >
+      <a href="#" id="rowview"
+        ><i class="fas fa-grip-lines" style="padding-right: 1em"></i
+      ></a>
+      <a href="#" id="gridview"><i class="fas fa-grip-horizontal"></i></a>
+    </div>
+    <div class="form-group align-self-center" style="padding-right: 1em">
+      <select class="form-control" id="category">
+        <option selected>all categories</option>
+        <option>books</option>
+        <option>poetry</option>
+        <option>daily</option>
+        <option>other</option>
+      </select>
+    </div>
+    <div class="form-group align-self-center">
+      <select class="form-control" id="level">
+        <option selected>all levels</option>
+        <option>one</option>
+        <option>two</option>
+        <option>three</option>
+        <option>four</option>
+      </select>
+    </div>
+    <div class="p-2 bd-highlight align-items-center">
+      <a href="#" id="filtericon"><i class="fas fa-arrow-right"></i></a>
+    </div>
+  </div>
+
+  <div class="card-deck courses_view"></div>
+  <div class="courses_view_row" style="display: none"></div>
+</div>
+<br />
+{%endblock%} {%block script%}
+<script src="{% static 'courses/courses.js' %}"></script>
+{%endblock%}

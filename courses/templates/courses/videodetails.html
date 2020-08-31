@@ -1,0 +1,83 @@
+{%extends 'courses/layout.html'%}{%load static%} {%block body%}
+<div class="content">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="/coursedetails/{{video.course.id}}">{{video.course.title}}</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{video.title}}
+      </li>
+    </ol>
+  </nav>
+  <div
+    class="parallax"
+    style="
+      background-image: url('{{video.img}}');
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 20em;
+    "
+  >
+    <h1>{{video.title}}</h1>
+  </div>
+  <div class="container" style="padding-top: 3em">
+    <p>{{video.description}}</p>
+    <p>{{video.description}}</p>
+    <p>{{video.description}}</p>
+    <iframe
+      src="{{video.url}}"
+      scrolling="no"
+      border="0"
+      frameborder="no"
+      framespacing="0"
+      allowfullscreen="true"
+      width="100%"
+      height="400em"
+    >
+    </iframe>
+    <p>or, go to site <a href="{{video.url}}">bilibili</a></p>
+    <div class="d-flex bd-highlight" style="padding-bottom: 3em">
+      <div class="p-2 flex-fill bd-highlight ctr">
+        <i class="fas fa-film" style="font-size: 50px"></i>
+      </div>
+      <div class="p-2 flex-fill bd-highlight ctr">
+        <i class="fas fa-pencil-alt" style="font-size: 50px"></i>
+      </div>
+      <div class="p-2 flex-fill bd-highlight ctr">
+        <i class="fas fa-book" style="font-size: 50px"></i>
+      </div>
+    </div>
+  </div>
+
+  {%if request.user.is_authenticated%}
+  <form action="/videodetails/{{video.id}}" method="POST">
+    {% csrf_token %}
+    <p id="error_msg"></p>
+    <div class="form-group">
+      <textarea
+        placeholder="Leave a reply..."
+        id="{{video.id}}comment"
+        cols="30"
+        rows="2"
+        class="form-control commenttxt"
+        name="comment"
+        data-id="{{video.id}}"
+      ></textarea>
+    </div>
+    <button class="btn btn-success commentbtn" type="button">Comment</button>
+  </form>
+  {%else%}
+  <p>Please login/register to comment!</p>
+  {%endif%}
+  <div class="d-flex">
+    <div class="p-2" id="commentnum"></div>
+    <div class="p-2 ml-auto">sort by...</div>
+  </div>
+  <div id="comments_list"></div>
+</div>
+{%endblock%} {%block script%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+<script src="{%static 'courses/videodetails.js'%}"></script>
+{%endblock%}
