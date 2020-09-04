@@ -51,7 +51,7 @@ function filtercourses() {
           </p>
         </div>
       </div>`;
-        course_div.innerHTML = `<div class="card" style="width: 10em">
+        course_div.innerHTML = `<div class="card zoomin" style="width: 10em">
   <img src='${course["coverimg"]}' class="card-img-top" alt="..." />
   <div class="card-body">
     <h5 class="card-title">${course["title"]}</h5>

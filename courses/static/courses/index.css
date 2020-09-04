@@ -102,10 +102,22 @@ body {
   background-size: cover;
 }
 
-.ctr {
-  text-align: center;
-}
-
 #courserow:hover {
   background-color: rgb(236, 247, 248);
+}
+
+textarea {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+#replyinput {
+  border-radius: 0.5em;
+}
+#replyinput:focus {
+  border-radius: 0.5em;
+  border-color: aqua;
+  outline: none;
 }

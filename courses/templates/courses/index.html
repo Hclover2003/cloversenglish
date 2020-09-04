@@ -36,6 +36,39 @@
   </a>
 </div>
 <div>
+  <div class="top-courses-div" style="text-align: center">
+    <h2 class="display-4">Top Courses</h2>
+    <div class="course-row" style="padding-top: 2em; padding-bottom: 1em">
+      <div class="d-flex flex-row">
+        {%for course in courses1%}
+        <div class="p-2">
+          <a href="/coursedetails/{{course.id}}"
+            ><img
+              src="{{course.coverimg}}"
+              alt=""
+              class="rounded img-fluid"
+              style="padding-right: 0.5em; padding-left: 0.5em"
+          /></a>
+        </div>
+        {%endfor%}
+      </div>
+      <div class="d-flex flex-row">
+        {%for course in courses2%}
+        <div class="p-2">
+          <a href="coursedetails/{{course.id}}">
+            <img
+              src="{{course.coverimg}}"
+              alt=""
+              class="img-fluid rounded"
+              style="padding-right: 0.5em; padding-left: 0.5em"
+          /></a>
+        </div>
+        {%endfor%}
+      </div>
+    </div>
+    <button class="btn btn-info">More courses...</button>
+  </div>
+  <br />
   <img src="{%static 'courses/img/balloons.jpg'%}" class="d-block w-100" />
   <img src="{%static 'courses/img/beach.jpg'%}" class="d-block w-100" />
   <img src="{%static 'courses/img/bulbasaur.jpg'%}" class="d-block w-100" />

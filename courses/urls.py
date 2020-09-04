@@ -15,7 +15,8 @@ urlpatterns = [
     path("videodetails/<int:videoid>",
          views.video_details, name="videodetails"),
 
-
+    # api routes
     path("courses/<str:view>", views.courses, name="courses"),
-    path("comment/<str:view>", views.comment, name="comment")
+    path("comment/<str:view>", views.comment, name="comment"),
+    path("reply", views.reply, name="reply")
 ]

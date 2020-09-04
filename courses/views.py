@@ -12,7 +12,11 @@ from .models import *
 
 
 def index(request):
-    return render(request, "courses/index.html")
+    courses = Course.objects.all()
+    return render(request, "courses/index.html", {
+        'courses1': list(courses[:2]),
+        'courses2': list(courses[2:4])
+    })
 
 
 def course_page(request):
@@ -35,13 +39,14 @@ def comment(request, view):
         newcmt = Comment(comment=data['comment'], user=request.user,
                          video=Video.objects.get(pk=data['vidid']))
         newcmt.save()
-    comments = Comment.objects.all()
+    comments = Comment.objects.all().order_by('timestamp').reverse()
     return JsonResponse([comment.serialize() for comment in comments], safe=False)
 
 
 def video_details(request, videoid):
     video = Video.objects.get(pk=videoid)
-    comments = Comment.objects.filter(video=video)
+    comments = Comment.objects.filter(
+        video=video).order_by('timestamp').reverse()
     print(len(comments))
     return render(request, "courses/videodetails.html", {
         "video": video,
