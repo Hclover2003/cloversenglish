@@ -11,66 +11,6 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 
-def index(request):
-    courses = Course.objects.all()
-    return render(request, "courses/index.html", {
-        'courses1': list(courses[:2]),
-        'courses2': list(courses[2:4])
-    })
-
-
-def course_page(request):
-    return render(request, "courses/courses.html")
-
-
-def course_details(request, courseid):
-    course = Course.objects.get(pk=courseid)
-    videos = Video.objects.filter(course=course)
-    return render(request, "courses/coursedetails.html", {
-        "course": course,
-        "videos": videos
-    })
-
-
-@csrf_exempt
-def comment(request, view):
-    if view == 'add':
-        data = json.loads(request.body)
-        newcmt = Comment(comment=data['comment'], user=request.user,
-                         video=Video.objects.get(pk=data['vidid']))
-        newcmt.save()
-    comments = Comment.objects.all().order_by('timestamp').reverse()
-    return JsonResponse([comment.serialize() for comment in comments], safe=False)
-
-
-def video_details(request, videoid):
-    video = Video.objects.get(pk=videoid)
-    comments = Comment.objects.filter(
-        video=video).order_by('timestamp').reverse()
-    print(len(comments))
-    return render(request, "courses/videodetails.html", {
-        "video": video,
-        "comments": comments,
-        "clen": len(comments)
-    })
-
-
-@csrf_exempt
-def courses(request, view):
-    if view == "all":
-        courses = Course.objects.all()
-    elif view == "filtered":
-        data = json.loads(request.body)
-        if (data["category"] != "all categories" and data["level"] != "all levels"):
-            courses = Course.objects.filter(
-                level=data["level"], category=data["category"])
-        elif data["category"] != "all categories":
-            courses = Course.objects.filter(category=data["category"])
-        elif data["level"] != "all levels":
-            courses = Course.objects.filter(level=data["level"])
-    return JsonResponse([course.serialize() for course in courses], safe=False)
-
-
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
@@ -120,3 +60,68 @@ def login_view(request):
             })
     else:
         return render(request, "courses/login.html")
+
+
+def index(request):
+    courses = Course.objects.all()
+    return render(request, "courses/index.html", {
+        'courses1': list(courses[:2]),
+        'courses2': list(courses[2:4])
+    })
+
+
+def course_page(request):
+    return render(request, "courses/courses.html")
+
+
+def course_details(request, courseid):
+    course = Course.objects.get(pk=courseid)
+    videos = Video.objects.filter(course=course)
+    return render(request, "courses/coursedetails.html", {
+        "course": course,
+        "videos": videos
+    })
+
+
+def video_details(request, videoid):
+    video = Video.objects.get(pk=videoid)
+    comments = Comment.objects.filter(
+        video=video).order_by('timestamp').reverse()
+    print(len(comments))
+    return render(request, "courses/videodetails.html", {
+        "video": video,
+        "comments": comments,
+        "clen": len(comments)
+    })
+
+
+@csrf_exempt
+def comment(request, view):
+    if view == 'add':
+        data = json.loads(request.body)
+        newcmt = Comment(comment=data['comment'], user=request.user,
+                         video=Video.objects.get(pk=data['vidid']))
+        newcmt.save()
+    comments = Comment.objects.all().order_by('timestamp').reverse()
+    return JsonResponse([comment.serialize() for comment in comments], safe=False)
+
+
+@csrf_exempt
+def courses(request, view):
+    if view == "all":
+        courses = Course.objects.all()
+    elif view == "filtered":
+        data = json.loads(request.body)
+        if (data["category"] != "all categories" and data["level"] != "all levels"):
+            courses = Course.objects.filter(
+                level=data["level"], category=data["category"])
+        elif data["category"] != "all categories":
+            courses = Course.objects.filter(category=data["category"])
+        elif data["level"] != "all levels":
+            courses = Course.objects.filter(level=data["level"])
+    return JsonResponse([course.serialize() for course in courses], safe=False)
+
+
+@csrf_exempt
+def reply(request):
+    print("hi")

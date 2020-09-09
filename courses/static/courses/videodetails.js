@@ -11,7 +11,7 @@ function addcmt(view) {
   txtara = document.querySelector(".commenttxt");
   if (txtara.value == "" && view == "add") {
     document.querySelector("#error_msg").innerHTML = "can't be empty!";
-  } else {
+  } else if (view != "reply") {
     fetch(`/comment/${view}`, {
       method: "post",
       body: JSON.stringify({
@@ -56,10 +56,12 @@ function addcmt(view) {
         ).innerHTML = `${comments.length} comments`;
         document.querySelectorAll("#reply").forEach((reply) => {
           reply.addEventListener("click", () =>
-            replycmt(reply.getAttribute("data-value"))
+            replycmt(reply.getAttribute("data-value"), "load")
           );
         });
       });
+  } else {
+    console.log(view);
   }
 }
 
@@ -70,16 +72,27 @@ function replycmt(cmtid, view) {
     });
     replybox = document.getElementsByClassName(`replybox reply${cmtid}`);
     replybox[0].innerHTML = `
+    <div className="d-flex">
     <img
       src="/static/courses/img/balloons.jpg"
       class="mr-3"
       alt="..."
       style="width: 3em; height: 3em; border-radius: 50%; object-fit: cover"
     />
-    <input type="text" placeholder="Reply..." id="replyinput" />
+    <textarea
+          placeholder="Reply..."
+          class="form-control"
+          id="replytxtarea"
+          rows="3"
+          cols="80"
+        ></textarea>
+        <button
+          class="btn btn-success replybtn"
+          type="button"
+          style="margin-left: 1em"
+        >
+          Reply
+        </button></div>
   `;
-  } else if (view == "reply") {
-  } else {
-    console.log("not a valid reply view");
   }
 }

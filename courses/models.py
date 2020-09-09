@@ -85,6 +85,6 @@ class Comment(models.Model):
 
 class Reply(models.Model):
     parentcomment = models.ForeignKey(
-        "Comment", on_delete=models.CASCADE, related_name="replies")
+        "Comment", blank=True, null=True, on_delete=models.SET_NULL, related_name="replies")
     timestamp = models.DateTimeField(auto_now_add=True)
     reply = models.CharField(max_length=1000)
