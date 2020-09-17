@@ -53,6 +53,7 @@ body {
   padding: 5em;
 }
 
+/*filter pages */
 #filtericon {
   color: rgb(241, 111, 235);
 }
@@ -60,6 +61,7 @@ body {
   color: rgb(236, 34, 34);
 }
 
+/*coursedetails*/
 .videocover:hover {
   opacity: 50%;
 }
@@ -91,6 +93,7 @@ body {
   background: white;
 }
 
+/*videodetails*/
 .parallax {
   /* Set a specific height */
   /* Create the parallax scrolling effect */
@@ -98,10 +101,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-#courserow:hover {
-  background-color: rgb(236, 247, 248);
 }
 
 textarea {
@@ -116,6 +115,6 @@ textarea {
 }
 #replyinput:focus {
   border-radius: 0.5em;
-  border-color: aqua;
+  border-color: rgb(185, 121, 211);
   outline: none;
 }

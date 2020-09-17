@@ -124,4 +124,32 @@ def courses(request, view):
 
 @csrf_exempt
 def reply(request):
-    print("hi")
+    data = json.loads(request.body)
+    newreply = Reply(parentcomment=Comment.objects.get(
+        pk=data['cmtid']), reply=data['reply'], user=request.user)
+    newreply.save()
+    comments = Comment.objects.all().order_by('timestamp').reverse()
+    return JsonResponse([comment.serialize() for comment in comments], safe=False)
+
+
+@csrf_exempt
+def loadreplies(request):
+    data = json.loads(request.body)
+    comment = Comment.objects.get(pk=data['cmtid'])
+    replies = Reply.objects.filter(parentcomment=comment)
+    return JsonResponse([reply.serialize() for reply in replies], safe=False)
+
+
+@csrf_exempt
+def delete(request):
+    data = json.loads(request.body)
+    print(data)
+    if (data["view"] == "comment"):
+        comment = Comment.objects.get(pk=data["id"])
+        comment.delete()
+    elif(data["view"] == "reply"):
+        reply = Reply.objects.get(pk=data["id"])
+        reply.delete()
+    else:
+        print("invalid delete view!")
+    return HttpResponse("success")

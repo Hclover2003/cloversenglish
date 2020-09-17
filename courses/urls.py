@@ -18,5 +18,7 @@ urlpatterns = [
     # api routes
     path("courses/<str:view>", views.courses, name="courses"),
     path("comment/<str:view>", views.comment, name="comment"),
-    path("reply", views.reply, name="reply")
+    path("reply", views.reply, name="reply"),
+    path("loadreplies", views.loadreplies, name="loadreply"),
+    path("delete", views.delete, name="delete")
 ]

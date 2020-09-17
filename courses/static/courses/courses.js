@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //load all courses
   filtercourses();
+
+  //filter courses on click
   filtericon = document.querySelector("#filtericon");
   filtericon.addEventListener("click", () => filtercourses());
+  //change to row view
   rowicon = document.querySelector("#rowview");
   rowicon.addEventListener("click", function () {
     document.querySelector(".courses_view").style.display = "none";
     document.querySelector(".courses_view_row").style.display = "block";
   });
+  //change to grid view
   gridicon = document.querySelector("#gridview");
   gridicon.addEventListener("click", function () {
     document.querySelector(".courses_view").style.display = "";

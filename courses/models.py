@@ -79,12 +79,23 @@ class Comment(models.Model):
             "vidtitle": self.video.title,
             "comment": self.comment,
             "timestamp": self.timestamp,
-            "username": self.user.username
+            "username": self.user.username,
         }
 
 
 class Reply(models.Model):
     parentcomment = models.ForeignKey(
-        "Comment", blank=True, null=True, on_delete=models.SET_NULL, related_name="replies")
+        "Comment", blank=True, null=True, on_delete=models.SET_NULL, related_name="commentreplies")
     timestamp = models.DateTimeField(auto_now_add=True)
     reply = models.CharField(max_length=1000)
+    user = models.ForeignKey("User", blank=True, null=True,
+                             on_delete=models.SET_NULL, related_name="userreplies")
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "cmtid": self.parentcomment.id,
+            "reply": self.reply,
+            "timestamp": self.timestamp,
+            "username": self.user.username,
+        }
